@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "../server/storage";
 import bcrypt from "bcryptjs";
 import session from "express-session";
-import { insertUserSchema, type InsertUser } from "@shared/schema";
+import { insertUserSchema, type InsertUser } from "../shared/schema";
 import { z } from "zod";
 import Stripe from "stripe";
 import 'dotenv/config';

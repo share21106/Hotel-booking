@@ -36,8 +36,16 @@ export interface IStorage {
   // Review methods
   getReviewsByHotel(hotelId: number): Promise<Review[]>;
   createReview(review: any): Promise<Review>;
+  
 }
-
+export type ReviewWithHotel = {
+  id: number;
+  rating: number;
+  title: string | null;
+  comment: string | null;
+  createdAt: Date;
+  hotel: { id: number; name: string } | null;
+};
 export class DatabaseStorage implements IStorage {
   async getUser(id: number): Promise<User | undefined> {
     const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
@@ -114,7 +122,7 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(reviews).where(eq(reviews.hotelId, hotelId));
   }
 
-  async getReviewsByUser(userId: number): Promise<Review[]> {
+  async getReviewsByUser(userId: number): Promise<ReviewWithHotel[]> {
     return await db.select({
       id: reviews.id,
       rating: reviews.rating,
